@@ -60,13 +60,31 @@ uv sync
 
 ## 5. Optional but worth doing — read the code first
 
+First make a signing key. It must be Ed25519 **with no passphrase** — the
+review command loads it with `password=None`, so a passphrase-protected key
+fails with *"Key is password-protected, but password was not provided."*
+
+```bash
+ssh-keygen -t ed25519 -f ~/.flwr/signing_key -N "" -C "flwr signing"
+```
+
+Then:
+
 ```bash
 uv run flwr app review @alpozaydin/manufacturer-agent
 ```
 
-This unpacks the agent that is about to read your technical file so you can
-read every line of it, then signs your review. You are not asked to trust
-anyone.
+It unpacks the agent that is about to read your technical file. Read it, type
+`SIGN`, and when it asks for the key give:
+
+```
+~/.flwr/signing_key
+```
+
+Not `signing_key.pub` — it wants the private half, the file with no extension.
+Windows: `C:\Users\<you>\.flwr\signing_key`
+
+You are not asked to trust anyone; you read the code and sign that you did.
 
 ---
 

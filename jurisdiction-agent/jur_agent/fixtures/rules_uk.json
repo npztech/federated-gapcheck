@@ -1,0 +1,39 @@
+{
+  "jurisdiction": "UK",
+  "name": "UK — radio-enabled mains-powered consumer device",
+  "sources": [
+    "Electromagnetic Compatibility Regulations 2016",
+    "Radio Equipment Regulations 2017",
+    "Electrical Equipment (Safety) Regulations 2016"
+  ],
+  "clauses": [
+    {
+      "id": "UK-EMC-1",
+      "title": "Radiated emissions, 30-230 MHz",
+      "requirement": "Radiated disturbance must not exceed 30 dBuV/m measured at 10 m for Class B equipment.",
+      "quantity": "radiated_emissions_30_230MHz",
+      "limit": {"value": 30.0, "unit": "dBuV/m", "distance_m": 10, "comparison": "<="}
+    },
+    {
+      "id": "UK-RED-1",
+      "title": "Radio spurious emissions",
+      "requirement": "Spurious emissions in the transmit band must not exceed -36 dBm.",
+      "quantity": "spurious_emissions",
+      "limit": {"value": -36.0, "unit": "dBm", "comparison": "<="}
+    },
+    {
+      "id": "UK-SAFE-1",
+      "title": "Electrical safety standard",
+      "requirement": "Equipment must be assessed against BS EN 62368-1.",
+      "quantity": "safety_standard",
+      "expected": "BS EN 62368-1"
+    },
+    {
+      "id": "UK-MARK-1",
+      "title": "Conformity marking",
+      "requirement": "Product must bear the UKCA marking and the manufacturer's address.",
+      "quantity": "markings",
+      "expected": "UKCA"
+    }
+  ]
+}

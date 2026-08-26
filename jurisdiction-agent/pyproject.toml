@@ -1,0 +1,27 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "jurisdiction-agent"
+version = "0.1.0"
+description = "Decomposes a national rulebook and adjudicates manufacturer claims"
+license = "Apache-2.0"
+requires-python = ">=3.11"
+dependencies = ["flwr>=1.35.0,<2.0", "openai>=2.16.0,<3.0.0"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["jur_agent"]
+
+[tool.flwr.app]
+publisher = "local"
+display-name = "Jurisdiction Agent"
+flwr-version-target = "1.35.0"
+fab-include = ["jur_agent/**/*.py", "jur_agent/fixtures/*.json"]
+
+[tool.flwr.app.config.agent]
+rulebook = "uk"
+claims-b64 = ""
+
+[tool.flwr.app.components]
+agentapp = "jur_agent.agent_app:app"

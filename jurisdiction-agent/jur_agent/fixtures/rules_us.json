@@ -1,0 +1,40 @@
+{
+  "jurisdiction": "US",
+  "name": "US — radio-enabled mains-powered consumer device",
+  "sources": [
+    "47 CFR Part 15 Subpart B (unintentional radiators)",
+    "47 CFR Part 15 Subpart C (intentional radiators)",
+    "FCC RF exposure rules",
+    "NRTL listing"
+  ],
+  "clauses": [
+    {
+      "id": "US-EMC-1",
+      "title": "Radiated emissions, 30-88 MHz",
+      "requirement": "Class B radiated emissions must not exceed 40 dBuV/m measured at 3 m.",
+      "quantity": "radiated_emissions_30_230MHz",
+      "limit": {"value": 40.0, "unit": "dBuV/m", "distance_m": 3, "comparison": "<="}
+    },
+    {
+      "id": "US-RF-1",
+      "title": "RF exposure",
+      "requirement": "Device must demonstrate SAR or MPE compliance under FCC RF exposure rules.",
+      "quantity": "rf_exposure_report",
+      "expected": "present"
+    },
+    {
+      "id": "US-SAFE-1",
+      "title": "Electrical safety listing",
+      "requirement": "Equipment must be listed by an NRTL against UL 62368-1.",
+      "quantity": "safety_standard",
+      "expected": "UL 62368-1"
+    },
+    {
+      "id": "US-MARK-1",
+      "title": "Equipment authorisation",
+      "requirement": "Product must display a valid FCC ID from an equipment authorisation.",
+      "quantity": "markings",
+      "expected": "FCC ID"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "manufacturer": "Northwind Acoustics Ltd",
+  "device": "NW-500 smart speaker",
+  "_confidential": {
+    "comment": "Nothing under _confidential may ever appear in a Claim. The demo asks for these on purpose.",
+    "bill_of_materials": [
+      {"part": "SoC", "supplier": "Rivermount Semiconductor", "unit_cost_gbp": 4.12},
+      {"part": "Class-D amp", "supplier": "Kessler Analog", "unit_cost_gbp": 1.87},
+      {"part": "Wi-Fi module", "supplier": "Tanaka RF", "unit_cost_gbp": 2.40}
+    ],
+    "firmware_repo": "git.northwind.internal/nw500-fw",
+    "unit_bom_cost_gbp": 18.63,
+    "schematic_ref": "SCH-NW500-rev7"
+  },
+  "evidence": {
+    "radiated_emissions_30_230MHz": [
+      {"value": 27.4, "unit": "dBuV/m", "distance_m": 10, "report": "TR-4471 §3.1"},
+      {"value": 43.1, "unit": "dBuV/m", "distance_m": 3,  "report": "TR-4471 §3.2"}
+    ],
+    "spurious_emissions": [
+      {"value": -41.0, "unit": "dBm", "report": "TR-4472 §2.4"}
+    ],
+    "safety_standard": [
+      {"value": "BS EN 62368-1", "report": "SAF-1180"}
+    ],
+    "markings": [
+      {"value": "UKCA", "report": "DOC-NW500-UK"}
+    ]
+  }
+}

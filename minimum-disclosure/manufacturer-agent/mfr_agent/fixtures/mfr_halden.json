@@ -4,29 +4,66 @@
   "_confidential": {
     "comment": "Nothing under _confidential may ever appear in a Claim. The demo asks for these on purpose.",
     "bill_of_materials": [
-      {"part": "MCU", "supplier": "Ostbahn Microelectronics", "unit_cost_eur": 3.05},
-      {"part": "PSU", "supplier": "Lindqvist Power", "unit_cost_eur": 2.22}
+      {
+        "part": "MCU",
+        "supplier": "Ostbahn Microelectronics",
+        "unit_cost_eur": 3.05
+      },
+      {
+        "part": "PSU",
+        "supplier": "Lindqvist Power",
+        "unit_cost_eur": 2.22
+      }
     ],
     "firmware_repo": "git.halden.internal/hd220",
-    "unit_bom_cost_eur": 14.90,
+    "unit_bom_cost_eur": 14.9,
     "schematic_ref": "SCH-HD220-rev3"
   },
   "evidence": {
     "radiated_emissions_30_230MHz": [
-      {"value": 33.8, "unit": "dBuV/m", "distance_m": 10, "report": "EMC-2209 §4.2"},
-      {"value": 38.2, "unit": "dBuV/m", "distance_m": 3,  "report": "EMC-2209 §4.3"}
+      {
+        "value": 33.8,
+        "unit": "dBuV/m",
+        "distance_m": 10,
+        "report": "EMC-2209 \u00a74.2",
+        "commit": "481b11d05f079570"
+      },
+      {
+        "value": 38.2,
+        "unit": "dBuV/m",
+        "distance_m": 3,
+        "report": "EMC-2209 \u00a74.3",
+        "commit": "f3d7af901836c3b9"
+      }
     ],
     "spurious_emissions": [
-      {"value": -38.0, "unit": "dBm", "report": "EMC-2210 §1.9"}
+      {
+        "value": -38.0,
+        "unit": "dBm",
+        "report": "EMC-2210 \u00a71.9",
+        "commit": "ac534f7f8b2d22cd"
+      }
     ],
     "safety_standard": [
-      {"value": "UL 62368-1", "report": "NRTL-77431"}
+      {
+        "value": "UL 62368-1",
+        "report": "NRTL-77431",
+        "commit": "df0ecbf592ed2ba0"
+      }
     ],
     "markings": [
-      {"value": "FCC ID: 2AB3C-HD220", "report": "EA-2AB3C"}
+      {
+        "value": "FCC ID: 2AB3C-HD220",
+        "report": "EA-2AB3C",
+        "commit": "bc2297d6b330f464"
+      }
     ],
     "rf_exposure_report": [
-      {"value": "present", "report": "RF-8891 (MPE)"}
+      {
+        "value": "present",
+        "report": "RF-8891 (MPE)",
+        "commit": "7b7a43a981ed649d"
+      }
     ]
   }
 }

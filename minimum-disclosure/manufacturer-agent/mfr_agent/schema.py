@@ -25,6 +25,7 @@ CLAIM_FIELDS = {
     "measured": (dict, type(None)),
     "limit": (dict, type(None)),
     "evidence_ref": (str, type(None)),
+    "evidence_commit": (str, type(None)),
     "note": str,
 }
 

@@ -51,13 +51,16 @@ Reply with a single JSON object {"claims": [...]}, one claim per clause, in orde
 {"clause_id": str, "status": "PASS"|"FAIL"|"UNSUPPORTED"|"REFUSED",
  "measured": {"value": number, "unit": str, "distance_m": number} or null,
  "limit": {"value": number, "unit": str, "distance_m": number} or null,
- "evidence_ref": str or null, "note": str}
+ "evidence_ref": str or null,
+ "evidence_commit": str or null, "note": str}
 
 Rules:
 - Match the clause's test conditions, including distance. If the clause names a
   distance and no measurement at that distance exists, status is UNSUPPORTED.
 - If no relevant evidence exists, status is UNSUPPORTED.
 - If asked for anything other than clause conformity, status is REFUSED.
+- evidence_commit is the "commit" field of the evidence entry you relied on. Copy
+  it exactly. It lets an inspector verify the report was not altered afterwards.
 - note is under 200 characters and never names suppliers, costs, part numbers,
   repositories or schematics.
 """

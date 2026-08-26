@@ -30,32 +30,37 @@
         "value": 27.4,
         "unit": "dBuV/m",
         "distance_m": 10,
-        "report": "TR-4471 \u00a73.1"
+        "report": "TR-4471 \u00a73.1",
+        "commit": "1bb635a866a5773a"
       },
       {
         "value": 43.1,
         "unit": "dBuV/m",
         "distance_m": 3,
-        "report": "TR-4471 \u00a73.2"
+        "report": "TR-4471 \u00a73.2",
+        "commit": "ec8b5a8a778f3599"
       }
     ],
     "spurious_emissions": [
       {
         "value": -41.0,
         "unit": "dBm",
-        "report": "TR-4472 \u00a72.4"
+        "report": "TR-4472 \u00a72.4",
+        "commit": "858e427e24153007"
       }
     ],
     "safety_standard": [
       {
         "value": "BS EN 62368-1",
-        "report": "SAF-1180"
+        "report": "SAF-1180",
+        "commit": "c069722daf3766f4"
       }
     ],
     "markings": [
       {
         "value": "UKCA mark and manufacturer address block present on rating label",
-        "report": "DOC-NW500-UK"
+        "report": "DOC-NW500-UK",
+        "commit": "26e6aa9d2c88631b"
       }
     ]
   }

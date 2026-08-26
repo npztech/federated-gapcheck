@@ -97,9 +97,41 @@ flower-supernode --superlink 127.0.0.1:9092 --insecure --port 9096 --node-config
 ### About the quoting
 
 `--node-config` takes one argument: space-separated `key=value` pairs whose
-values are **TOML literals**. So strings need their own double quotes,
-inside the shell's single quotes. Both bash and PowerShell treat `'...'`
-as literal, so the same line works in either.
+values are **TOML literals**. So the strings need quotes of their own,
+surviving inside the shell's quotes.
+
+**The bash form above does not work in PowerShell.** PowerShell strips the
+inner double quotes when handing the argument to a native executable, so
+the SuperNode receives `data-dir=C:/path/a` — an unquoted value that is not
+valid TOML — and fails to parse it. Measured on 26 Aug:
+
+```
+bash        ->  argv[2] = data-dir="C:/x/a" node-name="manufacturer_a"   OK
+PowerShell  ->  argv[2] = data-dir=C:/x/a node-name=manufacturer_a       BROKEN
+```
+
+In PowerShell, swap the quoting round: **double quotes outside, TOML
+literal (single) quotes inside.**
+
+```powershell
+flower-supernode --superlink 127.0.0.1:9092 --insecure --port 9094 --node-config "data-dir='C:/Users/ceprz/Documents/hackathon/nodes/manufacturer_a' node-name='manufacturer_a' display-name='Ningbo - infusion sets'"
+```
+
+TOML treats `'...'` as a literal string, so this parses to exactly the same
+config dict as the bash form. Verified through PowerShell's argument
+passing and then through Flower's own `parse_config_args`.
+
+Two forms that look like fixes and are not:
+
+- **`--%`**, the stop-parsing token, switches to cmd.exe-style parsing,
+  which does not understand single quotes. Given the bash line it yields
+  `'data-dir=C:/x/a` and `node-name=manufacturer_a'` as two separate
+  arguments. Do not use it here.
+- **Doubling the inner double quotes** inside an outer double-quoted string
+  gets stripped exactly like the single-quoted form.
+
+Backslash-escaping the inner quotes does work in PowerShell, but it breaks
+in bash — the wrong thing to write down for a command meant to be portable.
 
 Use **forward slashes** in the path. A backslash is an escape character in
 a TOML string and `"C:\Users\..."` will fail to parse.

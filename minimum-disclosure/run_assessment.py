@@ -127,6 +127,49 @@ def assess(jurisdiction: str, mfr_key: str, ledger_b64: str = "",
         {"agent.rulebook": jurisdiction, "agent.claims-b64": b64(json.dumps(claims))},
         None,
     )
+    # ---- round 2: the jurisdiction agent's follow-ups go back ------------
+    # Adjudication produces specific questions when evidence is insufficient.
+    # Delivering them is what makes this an exchange rather than a pipeline.
+    followups = [c for c in report.get("clauses", []) if c.get("followup")]
+    if followups:
+        by_id = {q["clause_id"]: q for q in queries}
+        if verbose:
+            print(f"  {len(followups)} follow-up question(s) -> manufacturer", flush=True)
+        second = flwr_run(
+            "manufacturer-agent",
+            {
+                "agent.technical-file": mfr["technical_file"],
+                "agent.jurisdiction": jurisdiction.upper(),
+                "agent.queries-b64": b64(json.dumps([
+                    {**by_id.get(c["clause_id"], {"clause_id": c["clause_id"]}),
+                     "query": f"{c['clause_id']} | follow-up | {c['followup']}"}
+                    for c in followups])),
+                "agent.ledger-b64": result["ledger_state_b64"],
+            },
+            mfr["federation"],
+        )
+        answered = {c["clause_id"]: c for c in second["claims"]}
+        for c in claims:
+            if c["clause_id"] in answered:
+                c.update(answered[c["clause_id"]])
+        egress_bytes += second["egress"]["bytes_crossed"]
+        result["ledger_state_b64"] = second["ledger_state_b64"]
+        result["ledger"] = second["ledger"]
+        if verbose:
+            for c in second["claims"]:
+                print(f"    re-answered {c['clause_id']:<10} {c['status']}", flush=True)
+
+        report = flwr_run(
+            "jurisdiction-agent",
+            {"agent.rulebook": jurisdiction, "agent.claims-b64": b64(json.dumps(claims))},
+            None,
+        )
+        report.setdefault("jurisdiction", jurisdiction.upper())
+        if verbose:
+            print(f"  -> re-adjudicated: {report.get('market_access')}", flush=True)
+
+    report["_rounds"] = 2 if followups else 1
+    report["_followups"] = len(followups)
     report["_egress"] = {
         "claims_crossed": len(claims),
         "bytes_crossed": egress_bytes,

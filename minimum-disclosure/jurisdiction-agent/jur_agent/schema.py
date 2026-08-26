@@ -37,7 +37,10 @@ class EgressViolation(Exception):
     """Raised when a payload would carry more than the contract permits."""
 
 
-NUMERIC = re.compile(r"-?\d+(?:[.,]\d+)?")
+# A standalone number - a measurement. Digits inside an identifier ("UK-EMC-1",
+# "UL 62368-1", "Part 15") are not measurements and must survive, or the note
+# loses the very citations that make a refusal auditable.
+NUMERIC = re.compile(r"(?<![\w.-])-?\d+(?:[.,]\d+)?(?![\w.-])")
 
 
 def scrub_note(note: str) -> str:

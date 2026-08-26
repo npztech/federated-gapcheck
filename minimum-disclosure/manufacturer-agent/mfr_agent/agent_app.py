@@ -279,7 +279,9 @@ def main(agent: AgentSession, context: Context) -> None:
                     )
                 withheld_value = True
                 draft["measured"] = None
-                draft["note"] = (scrub_note(str(draft.get("note", ""))) + " " + why).strip()[:200]
+                draft["note"] = scrub_note(
+                    str(draft.get("note", "")) + " " + why
+                ).strip()[:200]
                 ledger.record(key, "bit", str(clause.get("clause_id")), jurisdiction)
                 agent.events.emit(
                     {

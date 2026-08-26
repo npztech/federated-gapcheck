@@ -1,0 +1,37 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "gapcheck"
+version = "0.1.0"
+description = "Federated regulatory gap check - UKRP coordinator and manufacturer nodes"
+license = { file = "LICENSE" }
+requires-python = ">=3.11,<4.0"
+# No numpy, no ML. This app moves a checklist out and findings back.
+dependencies = ["flwr>=1.35.0,<2.0"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["gapcheck_app"]
+
+[tool.flwr.app]
+publisher = "npztech"
+fab-format-version = 1
+flwr-version-target = "1.35.0"
+
+[tool.flwr.app.components]
+serverapp = "gapcheck_app.server_app:app"
+clientapp = "gapcheck_app.client_app:app"
+
+[tool.flwr.app.config]
+# The rubric version announced to every node.
+checklist-version = "GB-CLASS-IIa-v1"
+
+# How long the coordinator waits for all nodes to answer, in seconds.
+round-timeout = 120.0
+
+# Where the ServerApp writes findings.json. The ServerApp runs from the
+# FAB install directory under ~/.flwr/apps/, NOT from this repository, so
+# this must be absolute. Set empty to skip writing. Override per run with:
+#   -c 'output-dir="D:/somewhere/else"'
+output-dir = "C:/Users/ceprz/Documents/hackathon/out"

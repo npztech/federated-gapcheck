@@ -1,0 +1,296 @@
+[
+  {
+    "node_id": "manufacturer_a",
+    "checklist_version": "GB-CLASS-IIa-v1",
+    "documents_inspected": 12,
+    "documents_transmitted": 0,
+    "summary": {
+      "present": 12,
+      "incomplete": 0,
+      "missing": 0
+    },
+    "findings": [
+      {
+        "id": "R01",
+        "requirement": "Device description and specification",
+        "requirement_zh": "产品描述与技术规格",
+        "status": "present",
+        "finding": "Document present and appears complete."
+      },
+      {
+        "id": "R02",
+        "requirement": "Labelling and IFU in English",
+        "requirement_zh": "英文标签与使用说明书",
+        "status": "present",
+        "finding": "Document present and appears complete."
+      },
+      {
+        "id": "R03",
+        "requirement": "Essential requirements checklist",
+        "requirement_zh": "基本要求对照表",
+        "status": "present",
+        "finding": "Document present and appears complete."
+      },
+      {
+        "id": "R04",
+        "requirement": "Risk management file (ISO 14971)",
+        "requirement_zh": "风险管理文件",
+        "status": "present",
+        "finding": "Document present and appears complete."
+      },
+      {
+        "id": "R05",
+        "requirement": "Biological evaluation (ISO 10993)",
+        "requirement_zh": "生物相容性评价",
+        "status": "present",
+        "finding": "Document present and appears complete."
+      },
+      {
+        "id": "R06",
+        "requirement": "Sterilisation validation",
+        "requirement_zh": "灭菌确认",
+        "status": "present",
+        "finding": "Document present and appears complete."
+      },
+      {
+        "id": "R07",
+        "requirement": "Clinical evaluation report",
+        "requirement_zh": "临床评价报告",
+        "status": "present",
+        "finding": "Document present and appears complete."
+      },
+      {
+        "id": "R08",
+        "requirement": "QMS certificate (ISO 13485)",
+        "requirement_zh": "质量管理体系证书",
+        "status": "present",
+        "finding": "Document present and appears complete."
+      },
+      {
+        "id": "R09",
+        "requirement": "Approved Body certificate",
+        "requirement_zh": "英国指定机构证书",
+        "status": "present",
+        "finding": "Document present and appears complete."
+      },
+      {
+        "id": "R10",
+        "requirement": "Declaration of conformity",
+        "requirement_zh": "符合性声明",
+        "status": "present",
+        "finding": "Document present and appears complete."
+      },
+      {
+        "id": "R11",
+        "requirement": "UKRP designation",
+        "requirement_zh": "英国责任人委任",
+        "status": "present",
+        "finding": "Document present and appears complete."
+      },
+      {
+        "id": "R12",
+        "requirement": "Post-market surveillance plan",
+        "requirement_zh": "上市后监督计划",
+        "status": "present",
+        "finding": "Document present and appears complete."
+      }
+    ],
+    "display_name": "Ningbo_infusion_sets"
+  },
+  {
+    "node_id": "manufacturer_b",
+    "checklist_version": "GB-CLASS-IIa-v1",
+    "documents_inspected": 8,
+    "documents_transmitted": 0,
+    "summary": {
+      "present": 7,
+      "incomplete": 1,
+      "missing": 4
+    },
+    "findings": [
+      {
+        "id": "R01",
+        "requirement": "Device description and specification",
+        "requirement_zh": "产品描述与技术规格",
+        "status": "present",
+        "finding": "Document present and appears complete."
+      },
+      {
+        "id": "R02",
+        "requirement": "Labelling and IFU in English",
+        "requirement_zh": "英文标签与使用说明书",
+        "status": "present",
+        "finding": "Document present and appears complete."
+      },
+      {
+        "id": "R03",
+        "requirement": "Essential requirements checklist",
+        "requirement_zh": "基本要求对照表",
+        "status": "incomplete",
+        "finding": "Document present but marked as draft or unfinished."
+      },
+      {
+        "id": "R04",
+        "requirement": "Risk management file (ISO 14971)",
+        "requirement_zh": "风险管理文件",
+        "status": "present",
+        "finding": "Document present and appears complete."
+      },
+      {
+        "id": "R05",
+        "requirement": "Biological evaluation (ISO 10993)",
+        "requirement_zh": "生物相容性评价",
+        "status": "missing",
+        "finding": "Not found. Confirm whether applicable to this device."
+      },
+      {
+        "id": "R06",
+        "requirement": "Sterilisation validation",
+        "requirement_zh": "灭菌确认",
+        "status": "missing",
+        "finding": "Not found. Confirm whether applicable to this device."
+      },
+      {
+        "id": "R07",
+        "requirement": "Clinical evaluation report",
+        "requirement_zh": "临床评价报告",
+        "status": "missing",
+        "finding": "No corresponding document found in the technical file."
+      },
+      {
+        "id": "R08",
+        "requirement": "QMS certificate (ISO 13485)",
+        "requirement_zh": "质量管理体系证书",
+        "status": "present",
+        "finding": "Document present and appears complete."
+      },
+      {
+        "id": "R09",
+        "requirement": "Approved Body certificate",
+        "requirement_zh": "英国指定机构证书",
+        "status": "present",
+        "finding": "Document present and appears complete."
+      },
+      {
+        "id": "R10",
+        "requirement": "Declaration of conformity",
+        "requirement_zh": "符合性声明",
+        "status": "present",
+        "finding": "Document present and appears complete."
+      },
+      {
+        "id": "R11",
+        "requirement": "UKRP designation",
+        "requirement_zh": "英国责任人委任",
+        "status": "present",
+        "finding": "Document present and appears complete."
+      },
+      {
+        "id": "R12",
+        "requirement": "Post-market surveillance plan",
+        "requirement_zh": "上市后监督计划",
+        "status": "missing",
+        "finding": "No corresponding document found in the technical file."
+      }
+    ],
+    "display_name": "Shenzhen_clinical_thermometers"
+  },
+  {
+    "node_id": "manufacturer_c",
+    "checklist_version": "GB-CLASS-IIa-v1",
+    "documents_inspected": 6,
+    "documents_transmitted": 0,
+    "summary": {
+      "present": 2,
+      "incomplete": 5,
+      "missing": 5
+    },
+    "findings": [
+      {
+        "id": "R01",
+        "requirement": "Device description and specification",
+        "requirement_zh": "产品描述与技术规格",
+        "status": "incomplete",
+        "finding": "Document present but marked as draft or unfinished."
+      },
+      {
+        "id": "R02",
+        "requirement": "Labelling and IFU in English",
+        "requirement_zh": "英文标签与使用说明书",
+        "status": "incomplete",
+        "finding": "Document present but marked as draft or unfinished."
+      },
+      {
+        "id": "R03",
+        "requirement": "Essential requirements checklist",
+        "requirement_zh": "基本要求对照表",
+        "status": "missing",
+        "finding": "No corresponding document found in the technical file."
+      },
+      {
+        "id": "R04",
+        "requirement": "Risk management file (ISO 14971)",
+        "requirement_zh": "风险管理文件",
+        "status": "incomplete",
+        "finding": "Document present but marked as draft or unfinished."
+      },
+      {
+        "id": "R05",
+        "requirement": "Biological evaluation (ISO 10993)",
+        "requirement_zh": "生物相容性评价",
+        "status": "present",
+        "finding": "Document present and appears complete."
+      },
+      {
+        "id": "R06",
+        "requirement": "Sterilisation validation",
+        "requirement_zh": "灭菌确认",
+        "status": "missing",
+        "finding": "Not found. Confirm whether applicable to this device."
+      },
+      {
+        "id": "R07",
+        "requirement": "Clinical evaluation report",
+        "requirement_zh": "临床评价报告",
+        "status": "missing",
+        "finding": "No corresponding document found in the technical file."
+      },
+      {
+        "id": "R08",
+        "requirement": "QMS certificate (ISO 13485)",
+        "requirement_zh": "质量管理体系证书",
+        "status": "present",
+        "finding": "Document present and appears complete."
+      },
+      {
+        "id": "R09",
+        "requirement": "Approved Body certificate",
+        "requirement_zh": "英国指定机构证书",
+        "status": "missing",
+        "finding": "Not found. Confirm whether applicable to this device."
+      },
+      {
+        "id": "R10",
+        "requirement": "Declaration of conformity",
+        "requirement_zh": "符合性声明",
+        "status": "incomplete",
+        "finding": "Document present but cites EU MDR rather than UK MDR 2002; marked as draft or unfinished."
+      },
+      {
+        "id": "R11",
+        "requirement": "UKRP designation",
+        "requirement_zh": "英国责任人委任",
+        "status": "incomplete",
+        "finding": "Document present but marked as draft or unfinished."
+      },
+      {
+        "id": "R12",
+        "requirement": "Post-market surveillance plan",
+        "requirement_zh": "上市后监督计划",
+        "status": "missing",
+        "finding": "No corresponding document found in the technical file."
+      }
+    ],
+    "display_name": "Guangzhou_orthopaedic_supports"
+  }
+]

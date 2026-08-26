@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UKRP readiness — federated gap check</title>
+<style>
+:root { --ink:#12212e; --mute:#5b6b78; --line:#dce3e8; --paper:#f7f9fa;
+--ok:#1d7a5f; --warn:#b8791a; --gap:#b03636; }
+* { box-sizing:border-box; }
+body { margin:0; padding:40px 24px; background:var(--paper); color:var(--ink);
+font:15px/1.6 "Segoe UI",-apple-system,system-ui,sans-serif; }
+.wrap { max-width:960px; margin:0 auto; }
+h1 { font-size:22px; font-weight:600; margin:0 0 4px; letter-spacing:-.2px; }
+.lede { color:var(--mute); margin:0 0 28px; font-size:14px; }
+.stat { display:flex; gap:32px; padding:16px 20px; background:#fff;
+border:1px solid var(--line); border-radius:10px; margin-bottom:24px; }
+.stat div span { display:block; }
+.stat .n { font-size:24px; font-weight:600; letter-spacing:-.5px; }
+.stat .k { font-size:12px; color:var(--mute); text-transform:uppercase;
+letter-spacing:.6px; }
+.stat .zero .n { color:var(--ok); }
+table { width:100%; border-collapse:collapse; background:#fff;
+border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+th,td { padding:10px 6px; text-align:center; font-size:13px; }
+thead th { background:#eef2f4; color:var(--mute); font-weight:500;
+font-size:11px; border-bottom:1px solid var(--line); cursor:help; }
+tbody th { text-align:left; padding-left:16px; font-weight:500;
+border-bottom:1px solid var(--line); }
+tbody td { border-bottom:1px solid var(--line); cursor:help; }
+.nm { display:block; text-transform:capitalize; }
+.sub { display:block; font-size:11px; color:var(--mute); font-weight:400; }
+.ok { color:var(--ok); background:rgba(29,122,95,.07); font-weight:600; }
+.warn { color:var(--warn); background:rgba(184,121,26,.09); font-weight:600; }
+.gap { color:var(--gap); background:rgba(176,54,54,.07); font-weight:600; }
+.score span { display:inline-block; min-width:38px; padding:2px 6px;
+border-radius:4px; font-weight:600; font-size:12px; }
+.ready { background:rgba(29,122,95,.12); color:var(--ok); }
+.near { background:rgba(184,121,26,.14); color:var(--warn); }
+.far { background:rgba(176,54,54,.1); color:var(--gap); }
+.key { margin-top:18px; font-size:12px; color:var(--mute); }
+.key b { font-weight:600; }
+</style></head><body><div class="wrap">
+<h1>UKRP readiness</h1>
+<p class="lede">Three manufacturers assessed against the same GB Class&nbsp;IIa
+checklist. Hover any cell for the finding.</p>
+<div class="stat">
+<div><span class="n">3</span><span class="k">nodes</span></div>
+<div><span class="n">26</span><span class="k">documents inspected</span></div>
+<div class="zero"><span class="n">0</span><span class="k">documents transferred</span></div>
+</div>
+<table><thead><tr><th scope="col">Manufacturer</th><th scope="col" title="Device description and specification">R01</th><th scope="col" title="Labelling and IFU in English">R02</th><th scope="col" title="Essential requirements checklist">R03</th><th scope="col" title="Risk management file (ISO 14971)">R04</th><th scope="col" title="Biological evaluation (ISO 10993)">R05</th><th scope="col" title="Sterilisation validation">R06</th><th scope="col" title="Clinical evaluation report">R07</th><th scope="col" title="QMS certificate (ISO 13485)">R08</th><th scope="col" title="Approved Body certificate">R09</th><th scope="col" title="Declaration of conformity">R10</th><th scope="col" title="UKRP designation">R11</th><th scope="col" title="Post-market surveillance plan">R12</th>
+<th scope="col">Ready</th></tr></thead>
+<tbody><tr>
+<th scope="row"><span class="nm">manufacturer a</span>
+<span class="sub">Ningbo - infusion sets</span></th>
+<td class="ok" title="R01 Device description and specification — Document present and appears complete.">✓</td><td class="ok" title="R02 Labelling and IFU in English — Document present and appears complete.">✓</td><td class="ok" title="R03 Essential requirements checklist — Document present and appears complete.">✓</td><td class="ok" title="R04 Risk management file (ISO 14971) — Document present and appears complete.">✓</td><td class="ok" title="R05 Biological evaluation (ISO 10993) — Document present and appears complete.">✓</td><td class="ok" title="R06 Sterilisation validation — Document present and appears complete.">✓</td><td class="ok" title="R07 Clinical evaluation report — Document present and appears complete.">✓</td><td class="ok" title="R08 QMS certificate (ISO 13485) — Document present and appears complete.">✓</td><td class="ok" title="R09 Approved Body certificate — Document present and appears complete.">✓</td><td class="ok" title="R10 Declaration of conformity — Document present and appears complete.">✓</td><td class="ok" title="R11 UKRP designation — Document present and appears complete.">✓</td><td class="ok" title="R12 Post-market surveillance plan — Document present and appears complete.">✓</td>
+<td class="score"><span class="ready">100</span></td></tr><tr>
+<th scope="row"><span class="nm">manufacturer b</span>
+<span class="sub">Shenzhen - clinical thermometers</span></th>
+<td class="ok" title="R01 Device description and specification — Document present and appears complete.">✓</td><td class="ok" title="R02 Labelling and IFU in English — Document present and appears complete.">✓</td><td class="warn" title="R03 Essential requirements checklist — Document present but marked as draft or unfinished.">!</td><td class="ok" title="R04 Risk management file (ISO 14971) — Document present and appears complete.">✓</td><td class="gap" title="R05 Biological evaluation (ISO 10993) — Not found. Confirm whether applicable to this device.">✕</td><td class="gap" title="R06 Sterilisation validation — Not found. Confirm whether applicable to this device.">✕</td><td class="gap" title="R07 Clinical evaluation report — No corresponding document found in the technical file.">✕</td><td class="ok" title="R08 QMS certificate (ISO 13485) — Document present and appears complete.">✓</td><td class="ok" title="R09 Approved Body certificate — Document present and appears complete.">✓</td><td class="ok" title="R10 Declaration of conformity — Document present and appears complete.">✓</td><td class="ok" title="R11 UKRP designation — Document present and appears complete.">✓</td><td class="gap" title="R12 Post-market surveillance plan — No corresponding document found in the technical file.">✕</td>
+<td class="score"><span class="near">62</span></td></tr><tr>
+<th scope="row"><span class="nm">manufacturer c</span>
+<span class="sub">Guangzhou - orthopaedic supports</span></th>
+<td class="warn" title="R01 Device description and specification — Document present but marked as draft or unfinished.">!</td><td class="warn" title="R02 Labelling and IFU in English — Document present but marked as draft or unfinished.">!</td><td class="gap" title="R03 Essential requirements checklist — No corresponding document found in the technical file.">✕</td><td class="warn" title="R04 Risk management file (ISO 14971) — Document present but marked as draft or unfinished.">!</td><td class="ok" title="R05 Biological evaluation (ISO 10993) — Document present and appears complete.">✓</td><td class="gap" title="R06 Sterilisation validation — Not found. Confirm whether applicable to this device.">✕</td><td class="gap" title="R07 Clinical evaluation report — No corresponding document found in the technical file.">✕</td><td class="ok" title="R08 QMS certificate (ISO 13485) — Document present and appears complete.">✓</td><td class="gap" title="R09 Approved Body certificate — Not found. Confirm whether applicable to this device.">✕</td><td class="warn" title="R10 Declaration of conformity — Document present but cites EU MDR rather than UK MDR 2002; marked as draft or unfinished.">!</td><td class="warn" title="R11 UKRP designation — Document present but marked as draft or unfinished.">!</td><td class="gap" title="R12 Post-market surveillance plan — No corresponding document found in the technical file.">✕</td>
+<td class="score"><span class="far">38</span></td></tr></tbody></table>
+<p class="key"><b>✓</b> present &nbsp; <b>!</b> present but incomplete
+&nbsp; <b>✕</b> missing. Every assessment was performed on the
+manufacturer's own machine. The coordinator received findings only.</p>
+</div></body></html>

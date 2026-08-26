@@ -8,8 +8,6 @@ __pycache__/
 # Local runtime logs (SuperLink / SuperNode)
 .runtime/
 
-# Generated output — reproduce with a run, see run_local_demo.md
-out/
 
 # Editor / scratch
 *.bak

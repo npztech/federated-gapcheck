@@ -7,7 +7,8 @@ out - but the call now crosses a network to a machine the coordinator
 does not control and cannot read.
 
 The coordinator never sees a nodes/ folder. Its only input is the findings
-payload each node chooses to return.
+payload each node chooses to return, including which device agent that
+node chose to run.
 """
 
 import json
@@ -21,17 +22,18 @@ from gapcheck_app.checklist import (
     INCOMPLETE_MARKERS,
     WRONG_REGULATION_MARKERS,
 )
+from gapcheck_app.dashboard import build_dashboard
+from gapcheck_app.gap_check import (
+    INCOMPLETE,
+    MISSING,
+    NOT_APPLICABLE,
+    PRESENT,
+    readiness,
+)
 
 MESSAGE_TYPE = "query.gap_check"
 
 app = ServerApp()
-
-
-def readiness(payload: dict) -> int:
-    """A single 0-100 score, so the dashboard can rank nodes."""
-    s = payload["summary"]
-    total = len(CHECKLIST)
-    return round(100 * (s["present"] + 0.5 * s["incomplete"]) / total)
 
 
 def _rubric(checklist_version: str) -> str:
@@ -39,7 +41,8 @@ def _rubric(checklist_version: str) -> str:
 
     This is the only payload that travels outward from the coordinator. It
     is a generic requirements list - it contains no client data, and it is
-    identical for every node.
+    identical for every node. Which of these requirements actually apply
+    is decided on the node, by the node's own device agent.
     """
     return json.dumps(
         {
@@ -69,8 +72,9 @@ def main(grid: Grid, context: Context) -> None:
 
     print(f"\nDistributing {checklist_version} to {len(node_ids)} node(s)...")
 
-    rubric_json = _rubric(checklist_version)
-    content = RecordDict({"checklist": ConfigRecord({"json": rubric_json})})
+    content = RecordDict(
+        {"checklist": ConfigRecord({"json": _rubric(checklist_version)})}
+    )
     messages = [
         Message(
             content,
@@ -94,6 +98,7 @@ def main(grid: Grid, context: Context) -> None:
             continue
         payload = json.loads(str(reply.content["findings"]["json"]))
         payload.setdefault("display_name", "")
+        payload.setdefault("agent_profile", "generic")
         results.append(payload)
 
     answered = len(results) + len(failures)
@@ -107,22 +112,32 @@ def main(grid: Grid, context: Context) -> None:
     if output_dir:
         out = Path(output_dir).expanduser()
         out.mkdir(parents=True, exist_ok=True)
-        target = out / "findings.json"
-        target.write_text(
+
+        findings_path = out / "findings.json"
+        findings_path.write_text(
             json.dumps(results, indent=2, ensure_ascii=False), encoding="utf-8"
         )
-        print(f"\nWritten to {target}")
+
+        dashboard_path = out / "dashboard.html"
+        dashboard_path.write_text(
+            build_dashboard(results, CHECKLIST), encoding="utf-8"
+        )
+
+        print(f"\nWritten to {findings_path}")
+        print(f"Written to {dashboard_path}")
 
 
 def _report(results: list[dict], failures: list[tuple[int, str]]) -> None:
-    """Print the same summary table as agent/coordinator.py."""
+    """Print the summary table."""
     print("Federated gap check complete.\n")
     for r in results:
         s = r["summary"]
         print(f'  {r["node_id"]:<16} '
-              f'present {s["present"]:>2}  '
-              f'incomplete {s["incomplete"]:>2}  '
-              f'missing {s["missing"]:>2}   '
+              f'{r["agent_profile"]:<11} '
+              f'present {s[PRESENT]:>2}  '
+              f'incomplete {s[INCOMPLETE]:>2}  '
+              f'missing {s[MISSING]:>2}  '
+              f'n/a {s.get(NOT_APPLICABLE, 0):>2}   '
               f'readiness {readiness(r)}%')
 
     for node_id, reason in failures:

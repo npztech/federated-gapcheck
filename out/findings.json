@@ -1,13 +1,16 @@
 [
   {
     "node_id": "manufacturer_a",
+    "agent_profile": "sterile",
+    "agent_display": "Sterile body-contacting device",
     "checklist_version": "GB-CLASS-IIa-v1",
     "documents_inspected": 12,
     "documents_transmitted": 0,
     "summary": {
       "present": 12,
       "incomplete": 0,
-      "missing": 0
+      "missing": 0,
+      "not_applicable": 0
     },
     "findings": [
       {
@@ -95,17 +98,20 @@
         "finding": "Document present and appears complete."
       }
     ],
-    "display_name": "Ningbo_infusion_sets"
+    "display_name": "Ningbo - infusion sets"
   },
   {
     "node_id": "manufacturer_b",
+    "agent_profile": "electronic",
+    "agent_display": "Non-invasive electronic device",
     "checklist_version": "GB-CLASS-IIa-v1",
     "documents_inspected": 8,
     "documents_transmitted": 0,
     "summary": {
       "present": 7,
       "incomplete": 1,
-      "missing": 4
+      "missing": 2,
+      "not_applicable": 2
     },
     "findings": [
       {
@@ -140,15 +146,15 @@
         "id": "R05",
         "requirement": "Biological evaluation (ISO 10993)",
         "requirement_zh": "生物相容性评价",
-        "status": "missing",
-        "finding": "Not found. Confirm whether applicable to this device."
+        "status": "not_applicable",
+        "finding": "Not applicable: non-invasive electronic device, supplied non-sterile."
       },
       {
         "id": "R06",
         "requirement": "Sterilisation validation",
         "requirement_zh": "灭菌确认",
-        "status": "missing",
-        "finding": "Not found. Confirm whether applicable to this device."
+        "status": "not_applicable",
+        "finding": "Not applicable: non-invasive electronic device, supplied non-sterile."
       },
       {
         "id": "R07",
@@ -193,17 +199,20 @@
         "finding": "No corresponding document found in the technical file."
       }
     ],
-    "display_name": "Shenzhen_clinical_thermometers"
+    "display_name": "Shenzhen - clinical thermometers"
   },
   {
     "node_id": "manufacturer_c",
+    "agent_profile": "class1",
+    "agent_display": "Class I non-sterile device",
     "checklist_version": "GB-CLASS-IIa-v1",
     "documents_inspected": 6,
     "documents_transmitted": 0,
     "summary": {
       "present": 2,
       "incomplete": 5,
-      "missing": 5
+      "missing": 3,
+      "not_applicable": 2
     },
     "findings": [
       {
@@ -245,8 +254,8 @@
         "id": "R06",
         "requirement": "Sterilisation validation",
         "requirement_zh": "灭菌确认",
-        "status": "missing",
-        "finding": "Not found. Confirm whether applicable to this device."
+        "status": "not_applicable",
+        "finding": "Not applicable: supplied non-sterile."
       },
       {
         "id": "R07",
@@ -266,8 +275,8 @@
         "id": "R09",
         "requirement": "Approved Body certificate",
         "requirement_zh": "英国指定机构证书",
-        "status": "missing",
-        "finding": "Not found. Confirm whether applicable to this device."
+        "status": "not_applicable",
+        "finding": "Not applicable: Class I non-sterile: no Approved Body conformity assessment required."
       },
       {
         "id": "R10",
@@ -291,6 +300,6 @@
         "finding": "No corresponding document found in the technical file."
       }
     ],
-    "display_name": "Guangzhou_orthopaedic_supports"
+    "display_name": "Guangzhou - orthopaedic supports"
   }
 ]

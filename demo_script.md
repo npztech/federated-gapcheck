@@ -72,14 +72,29 @@ flwr run gapcheck demo --stream
 > Each node is now reading its own technical file, on its own machine, and
 > deciding for itself what to say back.
 
+*When the table lands, point at the second column before anything else.*
+
+> These are three different agents. Not three copies of one — an infusion
+> set, a thermometer and an orthopaedic support are three different
+> regulatory problems, and each node runs the agent for the device it
+> actually makes.
+>
+> That is what the `n/a` column is. The thermometer's agent rules out
+> biological evaluation and sterilisation, because the device is
+> non-invasive and is not supplied sterile. Those two are not gaps. They
+> are not requirements. They come out of the denominator, which is why it
+> scores 75 and not 62.
+
+*Then let the eye fall to the bottom two lines.*
+
 *Point at T2, T3, T4 as their log lines move.*
 
 Output lands:
 
 ```
-manufacturer_a   present 12  incomplete  0  missing  0   readiness 100%
-manufacturer_b   present  7  incomplete  1  missing  4   readiness  62%
-manufacturer_c   present  2  incomplete  5  missing  5   readiness  38%
+manufacturer_a   sterile     present 12  incomplete  0  missing  0  n/a  0   readiness 100%
+manufacturer_b   electronic  present  7  incomplete  1  missing  2  n/a  2   readiness  75%
+manufacturer_c   class1      present  2  incomplete  5  missing  3  n/a  2   readiness  45%
 
 documents inspected  : 26
 documents transferred: 0
@@ -222,7 +237,15 @@ python coordinator.py
 
 Then open `out/dashboard.html`. Say:
 
-> Same logic, local runner — the federation ran all morning.
+> Same checklist, local runner — the federation ran all morning.
+
+**Caveat, and say it if you use this.** The fallback is the pre-profile
+single-process build. It applies all twelve requirements to every
+manufacturer, so it shows B at 62% and C at 38% with no `n/a` column. Do
+not claim those are the same numbers. Say: *the local runner does not have
+the per-device agents, so it scores everyone against the full checklist.*
+That is a truthful description of a fallback, and it sets up the point you
+were going to make anyway.
 
 Then carry on with the dashboard from **1:30**. The findings, the R10
 tooltip, and both pauses that depend on them are identical, because it is
@@ -243,6 +266,7 @@ picture and nothing else.
 |---|---|---|
 | 0:00 | four terminals | the problem, gesture at the three nodes |
 | 0:40 | T5 | `flwr run gapcheck demo --stream` |
+| 1:15 | T5 output | point at the profile column — three different agents |
 | 1:20 | T5 output | **PAUSE 1** — 3s silence on `transferred: 0` |
 | 1:30 | dashboard.html | green / amber / red |
 | 1:50 | hover c × R10 | **PAUSE 2** — read the EU MDR finding aloud |

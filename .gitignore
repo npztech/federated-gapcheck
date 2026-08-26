@@ -11,3 +11,6 @@ __pycache__/
 
 # Editor / scratch
 *.bak
+
+# Office lock files
+~$*

@@ -25,9 +25,9 @@ answer: *which of the twelve required documents exist, and are they usable?*
 ## The shape of the answer
 
 ```
-manufacturer_a   present 12  incomplete  0  missing  0   readiness 100%
-manufacturer_b   present  7  incomplete  1  missing  4   readiness  62%
-manufacturer_c   present  2  incomplete  5  missing  5   readiness  38%
+manufacturer_a   sterile     present 12  incomplete  0  missing  0  n/a  0   readiness 100%
+manufacturer_b   electronic  present  7  incomplete  1  missing  2  n/a  2   readiness  75%
+manufacturer_c   class1      present  2  incomplete  5  missing  3  n/a  2   readiness  45%
 
 documents inspected  : 26
 documents transferred: 0
@@ -35,6 +35,9 @@ documents transferred: 0
 
 That last pair of numbers is the point. Twenty-six documents were read.
 Zero were sent.
+
+The middle column is the device agent each node chose to run, and `n/a`
+counts requirements that agent ruled inapplicable to its own device.
 
 ---
 

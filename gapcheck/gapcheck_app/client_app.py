@@ -3,9 +3,13 @@ The manufacturer-side ClientApp.
 
 This process runs on the manufacturer's own machine, started by their own
 `flower-supernode`. It is the only component in the system that is allowed
-to touch the technical file, and the SuperNode operator decides where that
-is by passing `--node-config 'data-dir="..."'` at startup. Nothing in the
-coordinator's app can change that path.
+to touch the technical file, and the SuperNode operator decides both where
+that is and which device agent assesses it:
+
+    --node-config 'data-dir="..." agent-profile="sterile"'
+
+Both are the node's decision. Nothing in the coordinator's app can change
+the path or override which agent runs.
 """
 
 import json
@@ -14,6 +18,7 @@ from pathlib import Path
 from flwr.app import ConfigRecord, Context, Error, Message, RecordDict
 from flwr.clientapp import ClientApp
 
+from gapcheck_app.agents import UnknownAgentProfileError, load_agent
 from gapcheck_app.gap_check import run_gap_check
 
 # flwr.common.constant.ErrorCode.CLIENT_APP_RAISED_EXCEPTION. Inlined to keep
@@ -49,6 +54,16 @@ def gap_check(msg: Message, context: Context) -> Message:
             reply_to=msg,
         )
 
+    # --- select the device agent ---------------------------------------
+    # Absent profile falls back to the generic agent, so a node that has
+    # not been migrated keeps working. A profile that is set but not
+    # recognised is refused, because silently scoring against the wrong
+    # rubric is worse than not answering.
+    try:
+        agent = load_agent(node_config.get("agent-profile"))
+    except UnknownAgentProfileError as err:
+        return Message(Error(_ERROR_APP_FAILED, str(err)), reply_to=msg)
+
     # Identity is the node's own to declare. The coordinator learns who
     # answered from the reply, it does not hold a roster of who exists.
     node_id = str(node_config.get("node-name") or folder.name)
@@ -65,6 +80,7 @@ def gap_check(msg: Message, context: Context) -> Message:
         incomplete_markers=rubric["incomplete_markers"],
         wrong_regulation_markers=rubric["wrong_regulation_markers"],
         checklist_version=rubric["checklist_version"],
+        agent=agent,
     )
     if display_name:
         payload["display_name"] = display_name
@@ -72,9 +88,12 @@ def gap_check(msg: Message, context: Context) -> Message:
     # --- THE RED LINE --------------------------------------------------
     # `payload` is everything that leaves this machine. It contains, per
     # checklist item: an id, a requirement name, a status, and a finding
-    # note drawn from a fixed set of sentences. It does not contain
-    # document text, excerpts, filenames, or paths - not even for the
-    # documents that are missing.
+    # note drawn from a fixed set of sentences. Plus the name of the agent
+    # profile this node chose to run - a label, not a measurement.
+    #
+    # It does not contain document text, excerpts, filenames, or paths -
+    # not even for the documents that are missing, and not for the ones
+    # ruled not applicable, which are never opened at all.
     #
     # Document text was read inside run_gap_check() and went out of scope
     # when it returned. Do not add anything to `payload` here.

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "gapcheck"
-version = "0.1.0"
+version = "0.2.0"
 description = "Federated regulatory gap check - UKRP coordinator and manufacturer nodes"
 license = { file = "LICENSE" }
 requires-python = ">=3.11,<4.0"

@@ -79,20 +79,45 @@ their Runtime HTTP API, so without this the second and third fail to bind.
 Terminal 2 — Ningbo:
 
 ```bash
-flower-supernode --superlink 127.0.0.1:9092 --insecure --port 9094 --node-config 'data-dir="C:/Users/ceprz/Documents/hackathon/nodes/manufacturer_a" node-name="manufacturer_a" display-name="Ningbo - infusion sets"'
+flower-supernode --superlink 127.0.0.1:9092 --insecure --port 9094 --node-config 'data-dir="C:/Users/ceprz/Documents/hackathon/nodes/manufacturer_a" node-name="manufacturer_a" display-name="Ningbo - infusion sets" agent-profile="sterile"'
 ```
 
 Terminal 3 — Shenzhen:
 
 ```bash
-flower-supernode --superlink 127.0.0.1:9092 --insecure --port 9095 --node-config 'data-dir="C:/Users/ceprz/Documents/hackathon/nodes/manufacturer_b" node-name="manufacturer_b" display-name="Shenzhen - clinical thermometers"'
+flower-supernode --superlink 127.0.0.1:9092 --insecure --port 9095 --node-config 'data-dir="C:/Users/ceprz/Documents/hackathon/nodes/manufacturer_b" node-name="manufacturer_b" display-name="Shenzhen - clinical thermometers" agent-profile="electronic"'
 ```
 
 Terminal 4 — Guangzhou:
 
 ```bash
-flower-supernode --superlink 127.0.0.1:9092 --insecure --port 9096 --node-config 'data-dir="C:/Users/ceprz/Documents/hackathon/nodes/manufacturer_c" node-name="manufacturer_c" display-name="Guangzhou - orthopaedic supports"'
+flower-supernode --superlink 127.0.0.1:9092 --insecure --port 9096 --node-config 'data-dir="C:/Users/ceprz/Documents/hackathon/nodes/manufacturer_c" node-name="manufacturer_c" display-name="Guangzhou - orthopaedic supports" agent-profile="class1"'
 ```
+
+### Which agent each node runs
+
+`agent-profile` selects the device agent the node applies to the checklist.
+The coordinator sends the same twelve requirements to everyone; each node
+decides which of them apply to the device it actually makes.
+
+| profile | device | rules out |
+|---|---|---|
+| `sterile` | sterile, body-contacting, Class IIa+ | nothing — the full checklist applies |
+| `electronic` | non-invasive electronic instrument | R05, R06 |
+| `class1` | Class I non-sterile, self-certified | R06, R09 |
+
+A requirement ruled out is reported as `not_applicable`, never opened, and
+removed from the readiness denominator — so a manufacturer is not scored
+down for lacking a sterilisation validation for a device it does not
+supply sterile.
+
+**Omitting `agent-profile` is supported** and gives the generic agent,
+which applies all twelve. That is the behaviour of the build before agents
+existed, so an un-migrated node still works.
+
+**A profile that is set but not recognised is refused**, and the node
+returns an error instead of findings. A typo would otherwise score the
+manufacturer against the wrong rubric with nothing to show it happened.
 
 ### About the quoting
 
@@ -114,7 +139,7 @@ In PowerShell, swap the quoting round: **double quotes outside, TOML
 literal (single) quotes inside.**
 
 ```powershell
-flower-supernode --superlink 127.0.0.1:9092 --insecure --port 9094 --node-config "data-dir='C:/Users/ceprz/Documents/hackathon/nodes/manufacturer_a' node-name='manufacturer_a' display-name='Ningbo - infusion sets'"
+flower-supernode --superlink 127.0.0.1:9092 --insecure --port 9094 --node-config "data-dir='C:/Users/ceprz/Documents/hackathon/nodes/manufacturer_a' node-name='manufacturer_a' display-name='Ningbo - infusion sets' agent-profile='sterile'"
 ```
 
 TOML treats `'...'` as a literal string, so this parses to exactly the same
@@ -169,9 +194,9 @@ Expected output:
 Distributing GB-CLASS-IIa-v1 to 3 node(s)...
 Federated gap check complete.
 
-  manufacturer_a   present 12  incomplete  0  missing  0   readiness 100%
-  manufacturer_b   present  7  incomplete  1  missing  4   readiness 62%
-  manufacturer_c   present  2  incomplete  5  missing  5   readiness 38%
+  manufacturer_a   sterile     present 12  incomplete  0  missing  0  n/a  0   readiness 100%
+  manufacturer_b   electronic  present  7  incomplete  1  missing  2  n/a  2   readiness 75%
+  manufacturer_c   class1      present  2  incomplete  5  missing  3  n/a  2   readiness 45%
 
   documents inspected  : 26
   documents transferred: 0
@@ -180,6 +205,11 @@ Written to C:\Users\ceprz\Documents\hackathon\out\findings.json
 ```
 
 That last pair of numbers is the demo. 26 documents were read; 0 were sent.
+
+The `n/a` column is requirements each node's device agent ruled out as
+not applicable to its device. They are excluded from the readiness
+denominator, which is why B and C score higher here than they would
+against the undifferentiated checklist.
 
 ### Overriding config
 

@@ -26,18 +26,24 @@ python coordinator.py
 
 Then open `out/dashboard.html`.
 
-Expected output:
+Expected output from the **federated** run:
 
 ```
-manufacturer_a   present 12  incomplete  0  missing  0   readiness 100%
-manufacturer_b   present  7  incomplete  1  missing  4   readiness  62%
-manufacturer_c   present  2  incomplete  5  missing  5   readiness  38%
+manufacturer_a   sterile     present 12  incomplete  0  missing  0  n/a  0   readiness 100%
+manufacturer_b   electronic  present  7  incomplete  1  missing  2  n/a  2   readiness  75%
+manufacturer_c   class1      present  2  incomplete  5  missing  3  n/a  2   readiness  45%
 
 documents inspected  : 26
 documents transferred: 0
 ```
 
 That last pair of numbers is the demo.
+
+The single-process fallback in `agent/` predates the per-device
+agents and applies all twelve requirements to everyone, so it
+reports B at 62% and C at 38% with no `n/a` column. That divergence
+is deliberate: the fallback is kept frozen as a runner that needs no
+Flower runtime.
 
 ---
 

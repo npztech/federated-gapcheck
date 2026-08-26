@@ -1,7 +1,7 @@
 # Federated regulatory gap check
 
 A UKRP sends a compliance checklist to overseas manufacturers. Each
-manufacturer's agent reads their technical file locally and returns
+manufacturer's agent reads their technical file locally and returns 
 twelve findings. No document ever crosses the network.
 
 Built for the Collaborative Agent Hackathon, Cambridge, 26 August 2026.

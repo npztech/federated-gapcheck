@@ -1,26 +1,78 @@
-# Run your manufacturer agent
+# Manufacturer setup — from scratch
 
-You are a manufacturer. Your technical file stays yours; only yes/no answers leave.
+You are playing a device manufacturer. Your technical file stays yours.
+Only yes/no answers leave your machine.
 
-## One-time setup
+Everything below is copy-paste. Nothing needs editing.
+
+---
+
+## 1. Install uv  (skip if you have it)
+
+macOS / Linux:
 
 ```bash
-uv run flwr login supergrid
-uv run flwr new @alpozaydin/manufacturer-agent
-cd manufacturer-agent && uv sync
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-## Optional: read the code before you run it
+Windows PowerShell:
+
+```powershell
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+Close and reopen your terminal, then check:
+
+```bash
+uv --version
+```
+
+## 2. Sign in to Flower
+
+```bash
+uvx --from flwr flwr login supergrid
+```
+
+A browser opens. Sign in with your Flower account.
+
+## 3. Accept the federation invitation
+
+```bash
+uvx --from flwr flwr federation invite ls supergrid
+uvx --from flwr flwr federation invite accept <invitation-id> supergrid
+```
+
+Confirm you can see it:
+
+```bash
+uvx --from flwr flwr federation ls supergrid
+```
+
+You should see `@alpozaydin/conformity`.
+
+## 4. Get the agent
+
+```bash
+uvx --from flwr flwr new @alpozaydin/manufacturer-agent
+cd manufacturer-agent
+uv sync
+```
+
+## 5. Optional but worth doing — read the code first
 
 ```bash
 uv run flwr app review @alpozaydin/manufacturer-agent
 ```
 
-Unpacks the agent that will touch your file so you can read it, then signs your review.
+This unpacks the agent that is about to read your technical file so you can
+read every line of it, then signs your review. You are not asked to trust
+anyone.
 
 ---
 
-## amberwu1201 — mfr_northwind
+## 6. Run it — amberwu1201
+
+Northwind NW-500 against UK rules.
 
 ```bash
 uv run flwr run . supergrid --federation @alpozaydin/conformity --stream \
@@ -29,11 +81,13 @@ uv run flwr run . supergrid --federation @alpozaydin/conformity --stream \
                 agent.queries-b64=\"W3siY2xhdXNlX2lkIjogIlVLLUVNQy0xIiwgInRpdGxlIjogIlJhZGlhdGVkIGVtaXNzaW9ucywgMzAtMjMwIE1IeiIsICJxdWVyeSI6ICJVSy1FTUMtMSB8IFJhZGlhdGVkIGVtaXNzaW9ucywgMzAtMjMwIE1IeiB8IFJhZGlhdGVkIGRpc3R1cmJhbmNlIG11c3Qgbm90IGV4Y2VlZCAzMCBkQnVWL20gbWVhc3VyZWQgYXQgMTAgbSBmb3IgQ2xhc3MgQiBlcXVpcG1lbnQuIiwgInF1YW50aXR5IjogInJhZGlhdGVkX2VtaXNzaW9uc18zMF8yMzBNSHoiLCAibGltaXQiOiB7InZhbHVlIjogMzAuMCwgInVuaXQiOiAiZEJ1Vi9tIiwgImRpc3RhbmNlX20iOiAxMCwgImNvbXBhcmlzb24iOiAiPD0ifSwgImV4cGVjdGVkIjogbnVsbH0sIHsiY2xhdXNlX2lkIjogIlVLLVJFRC0xIiwgInRpdGxlIjogIlJhZGlvIHNwdXJpb3VzIGVtaXNzaW9ucyIsICJxdWVyeSI6ICJVSy1SRUQtMSB8IFJhZGlvIHNwdXJpb3VzIGVtaXNzaW9ucyB8IFNwdXJpb3VzIGVtaXNzaW9ucyBpbiB0aGUgdHJhbnNtaXQgYmFuZCBtdXN0IG5vdCBleGNlZWQgLTM2IGRCbS4iLCAicXVhbnRpdHkiOiAic3B1cmlvdXNfZW1pc3Npb25zIiwgImxpbWl0IjogeyJ2YWx1ZSI6IC0zNi4wLCAidW5pdCI6ICJkQm0iLCAiY29tcGFyaXNvbiI6ICI8PSJ9LCAiZXhwZWN0ZWQiOiBudWxsfSwgeyJjbGF1c2VfaWQiOiAiVUstU0FGRS0xIiwgInRpdGxlIjogIkVsZWN0cmljYWwgc2FmZXR5IHN0YW5kYXJkIiwgInF1ZXJ5IjogIlVLLVNBRkUtMSB8IEVsZWN0cmljYWwgc2FmZXR5IHN0YW5kYXJkIHwgRXF1aXBtZW50IG11c3QgYmUgYXNzZXNzZWQgYWdhaW5zdCBCUyBFTiA2MjM2OC0xLiIsICJxdWFudGl0eSI6ICJzYWZldHlfc3RhbmRhcmQiLCAibGltaXQiOiBudWxsLCAiZXhwZWN0ZWQiOiAiQlMgRU4gNjIzNjgtMSJ9LCB7ImNsYXVzZV9pZCI6ICJVSy1NQVJLLTEiLCAidGl0bGUiOiAiQ29uZm9ybWl0eSBtYXJraW5nIiwgInF1ZXJ5IjogIlVLLU1BUkstMSB8IENvbmZvcm1pdHkgbWFya2luZyB8IFByb2R1Y3QgbXVzdCBiZWFyIHRoZSBVS0NBIG1hcmtpbmcgYW5kIHRoZSBtYW51ZmFjdHVyZXIncyBhZGRyZXNzLiIsICJxdWFudGl0eSI6ICJtYXJraW5ncyIsICJsaW1pdCI6IG51bGwsICJleHBlY3RlZCI6ICJVS0NBIn1d\""
 ```
 
-Copy back the `csv` block and the `ledger_state_b64` line it prints.
+Send back the `csv` block and the `ledger_state_b64` line.
 
 ---
 
-## npztech — mfr_halden
+## 6. Run it — npztech
+
+Halden HD-220 against US rules.
 
 ```bash
 uv run flwr run . supergrid --federation @alpozaydin/conformity --stream \
@@ -42,5 +96,21 @@ uv run flwr run . supergrid --federation @alpozaydin/conformity --stream \
                 agent.queries-b64=\"W3siY2xhdXNlX2lkIjogIlVTLUVNQy0xIiwgInRpdGxlIjogIlJhZGlhdGVkIGVtaXNzaW9ucywgMzAtODggTUh6IiwgInF1ZXJ5IjogIlVTLUVNQy0xIHwgUmFkaWF0ZWQgZW1pc3Npb25zLCAzMC04OCBNSHogfCBDbGFzcyBCIHJhZGlhdGVkIGVtaXNzaW9ucyBtdXN0IG5vdCBleGNlZWQgNDAgZEJ1Vi9tIG1lYXN1cmVkIGF0IDMgbS4iLCAicXVhbnRpdHkiOiAicmFkaWF0ZWRfZW1pc3Npb25zXzMwXzIzME1IeiIsICJsaW1pdCI6IHsidmFsdWUiOiA0MC4wLCAidW5pdCI6ICJkQnVWL20iLCAiZGlzdGFuY2VfbSI6IDMsICJjb21wYXJpc29uIjogIjw9In0sICJleHBlY3RlZCI6IG51bGx9LCB7ImNsYXVzZV9pZCI6ICJVUy1SRi0xIiwgInRpdGxlIjogIlJGIGV4cG9zdXJlIiwgInF1ZXJ5IjogIlVTLVJGLTEgfCBSRiBleHBvc3VyZSB8IERldmljZSBtdXN0IGRlbW9uc3RyYXRlIFNBUiBvciBNUEUgY29tcGxpYW5jZSB1bmRlciBGQ0MgUkYgZXhwb3N1cmUgcnVsZXMuIiwgInF1YW50aXR5IjogInJmX2V4cG9zdXJlX3JlcG9ydCIsICJsaW1pdCI6IG51bGwsICJleHBlY3RlZCI6ICJwcmVzZW50In0sIHsiY2xhdXNlX2lkIjogIlVTLVNBRkUtMSIsICJ0aXRsZSI6ICJFbGVjdHJpY2FsIHNhZmV0eSBsaXN0aW5nIiwgInF1ZXJ5IjogIlVTLVNBRkUtMSB8IEVsZWN0cmljYWwgc2FmZXR5IGxpc3RpbmcgfCBFcXVpcG1lbnQgbXVzdCBiZSBsaXN0ZWQgYnkgYW4gTlJUTCBhZ2FpbnN0IFVMIDYyMzY4LTEuIiwgInF1YW50aXR5IjogInNhZmV0eV9zdGFuZGFyZCIsICJsaW1pdCI6IG51bGwsICJleHBlY3RlZCI6ICJVTCA2MjM2OC0xIn0sIHsiY2xhdXNlX2lkIjogIlVTLU1BUkstMSIsICJ0aXRsZSI6ICJFcXVpcG1lbnQgYXV0aG9yaXNhdGlvbiIsICJxdWVyeSI6ICJVUy1NQVJLLTEgfCBFcXVpcG1lbnQgYXV0aG9yaXNhdGlvbiB8IFByb2R1Y3QgbXVzdCBkaXNwbGF5IGEgdmFsaWQgRkNDIElEIGZyb20gYW4gZXF1aXBtZW50IGF1dGhvcmlzYXRpb24uIiwgInF1YW50aXR5IjogIm1hcmtpbmdzIiwgImxpbWl0IjogbnVsbCwgImV4cGVjdGVkIjogIkZDQyBJRCJ9XQ==\""
 ```
 
-Copy back the `csv` block and the `ledger_state_b64` line it prints.
+Send back the `csv` block and the `ledger_state_b64` line.
+
+---
+
+## 7. Watch it in the browser
+
+Open <https://flower.ai/app>, sign in, and you will see the run you just
+started plus any the coordinator dispatches into the federation.
+
+## If something breaks
+
+| Symptom | Fix |
+|---|---|
+| `flwr: command not found` | reopen the terminal, or use `uvx --from flwr flwr ...` |
+| `No such option '--federation'` | run `uv sync` inside `manufacturer-agent` first |
+| invitation not listed | ask for a fresh invite |
+| run hangs over a minute | first run installs dependencies remotely, give it two |
 

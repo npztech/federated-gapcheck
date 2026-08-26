@@ -66,7 +66,16 @@ Rules:
 """
 
 
-def load_technical_file(name: str) -> dict[str, Any]:
+def load_technical_file(name: str, supplied_b64: str = "") -> dict[str, Any]:
+    """Load the technical file.
+
+    A manufacturer supplies their own file at run time. The bundled fixtures
+    are a demo convenience only: shipping every manufacturer's file inside one
+    App Bundle would put a competitor's data in your bundle, which is exactly
+    what this system exists to prevent.
+    """
+    if supplied_b64:
+        return json.loads(base64.b64decode(supplied_b64).decode())
     path = FIXTURES / f"{name}.json"
     if not path.exists():
         raise ValueError(f"unknown technical file {name!r}")
@@ -160,7 +169,10 @@ def save_ledger(context: Context, ledger: Ledger) -> None:
 @app.main()
 def main(agent: AgentSession, context: Context) -> None:
     rc = context.run_config
-    technical_file = load_technical_file(str(rc.get("agent.technical-file", "")))
+    technical_file = load_technical_file(
+        str(rc.get("agent.technical-file", "")),
+        str(rc.get("agent.technical-file-b64") or "").strip(),
+    )
     forbidden = confidential_strings(technical_file)
     log = EgressLog()
     jurisdiction = str(rc.get("agent.jurisdiction", "?"))

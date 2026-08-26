@@ -14,7 +14,7 @@ dependencies = ["flwr>=1.35.0,<2.0", "openai>=2.16.0,<3.0.0"]
 packages = ["jur_agent"]
 
 [tool.flwr.app]
-publisher = "local"
+publisher = "alpozaydin"
 display-name = "Jurisdiction Agent"
 flwr-version-target = "1.35.0"
 fab-include = ["jur_agent/**/*.py", "jur_agent/fixtures/*.json"]

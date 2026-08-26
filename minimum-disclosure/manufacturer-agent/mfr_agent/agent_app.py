@@ -230,6 +230,24 @@ def main(agent: AgentSession, context: Context) -> None:
 
         # ---- layer 3: minimum sufficient disclosure, then the ledger -----
         key = quantity_key(clause)
+
+        # A free-text question carries no quantity or limit, so the ledger has
+        # nothing to price. That is exactly when a value must not leave: an
+        # unstructured ask is the easiest way to walk a number out of the
+        # building. Unpriced means unreleased.
+        if not key and isinstance(draft.get("measured"), dict):
+            withheld_value = True
+            draft["measured"] = None
+            draft["note"] = scrub_note(
+                str(draft.get("note", ""))
+                + " Value withheld: this question cites no clause limit, so the"
+                " disclosure cannot be priced."
+            ).strip()[:200]
+            agent.events.emit(
+                {"type": "compliance.disclosure.withheld",
+                 "clause_id": clause.get("clause_id"), "reason": "unpriced"}
+            )
+
         if key and isinstance(draft.get("measured"), dict):
             # Default to the least that resolves the clause. Releasing the
             # measured value is an escalation the regulator must ask for.

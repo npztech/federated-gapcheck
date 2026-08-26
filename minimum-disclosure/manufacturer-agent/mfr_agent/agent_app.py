@@ -32,6 +32,7 @@ from openai import OpenAI
 from mfr_agent.ledger import Ledger, minimum_sufficient
 from mfr_agent.schema import (
     EgressLog,
+    scrub_note,
     EgressViolation,
     confidential_strings,
     validate_claim,
@@ -208,6 +209,7 @@ def main(agent: AgentSession, context: Context) -> None:
 
     claims, decisions = [], []
     for clause, draft in zip(clauses, drafts + [{}] * len(clauses)):
+        withheld_value = False
         if not isinstance(draft, dict):
             draft = refusal(clause.get("clause_id", "unknown"), "malformed draft")
 
@@ -220,11 +222,10 @@ def main(agent: AgentSession, context: Context) -> None:
             if wanted == "bit" and not bool(rc.get("agent.request-exact")):
                 ledger.record(key, "bit", str(clause.get("clause_id")), jurisdiction)
                 draft["measured"] = None
-                draft["note"] = (
+                withheld_value = True
+                draft["note"] = scrub_note(
                     str(draft.get("note", ""))
-                    + " Verdict given against the published limit; measured value not"
-                    " required by this clause."
-                ).strip()[:200]
+                ).strip()[:160] + " Value not required by this clause."
                 decisions.append(
                     {"clause_id": clause.get("clause_id"), "quantity": key,
                      "allowed": True, "released": "bit", "cost_bits": 1.0,
@@ -273,8 +274,9 @@ def main(agent: AgentSession, context: Context) -> None:
                         f"Value withheld: disclosure budget spent "
                         f"({decision['spent_total']}/{decision['budget_bits']} bits)."
                     )
+                withheld_value = True
                 draft["measured"] = None
-                draft["note"] = (str(draft.get("note", "")) + " " + why).strip()[:200]
+                draft["note"] = (scrub_note(str(draft.get("note", ""))) + " " + why).strip()[:200]
                 ledger.record(key, "bit", str(clause.get("clause_id")), jurisdiction)
                 agent.events.emit(
                     {
@@ -288,7 +290,13 @@ def main(agent: AgentSession, context: Context) -> None:
 
         # ---- layer 2: the egress contract -------------------------------
         try:
-            claim = validate_claim(draft, forbidden=forbidden)
+            claim = validate_claim(
+                draft,
+                forbidden=forbidden,
+                # Only when a measured value was actually withheld. Public
+                # standard numbers like "UL 62368-1" are not secrets.
+                note_must_be_numeric_free=withheld_value,
+            )
             log.record(claim)
         except (EgressViolation, TypeError) as exc:
             log.reject(str(exc))

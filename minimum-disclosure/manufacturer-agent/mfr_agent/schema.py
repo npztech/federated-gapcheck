@@ -11,6 +11,7 @@ because a Flower App Bundle ships its own dependencies.
 from __future__ import annotations
 
 import json
+import re
 from typing import Any
 
 # --------------------------------------------------------------------------
@@ -35,7 +36,26 @@ class EgressViolation(Exception):
     """Raised when a payload would carry more than the contract permits."""
 
 
-def validate_claim(claim: Any, *, forbidden: list[str] | None = None) -> dict[str, Any]:
+NUMERIC = re.compile(r"-?\d+(?:[.,]\d+)?")
+
+
+def scrub_note(note: str) -> str:
+    """Remove every number from a note.
+
+    A note is free text written by a model, which makes it an unbounded
+    channel. When the measured value has been withheld, any number in the
+    note can reconstruct it: "exceeds the limit by 3.1 dB" plus a published
+    limit of 40 gives 43.1. So when a value is withheld, no digits leave.
+    """
+    return NUMERIC.sub("[redacted]", note)
+
+
+def validate_claim(
+    claim: Any,
+    *,
+    forbidden: list[str] | None = None,
+    note_must_be_numeric_free: bool = False,
+) -> dict[str, Any]:
     """Check one claim against the contract. Raise if it does not conform.
 
     `forbidden` holds strings drawn from the confidential section of the local
@@ -70,6 +90,12 @@ def validate_claim(claim: Any, *, forbidden: list[str] | None = None) -> dict[st
             extra = set(value) - MEASURE_FIELDS
             if extra:
                 raise EgressViolation(f"{field} carries unexpected keys: {sorted(extra)}")
+
+    if note_must_be_numeric_free and NUMERIC.search(claim["note"]):
+        raise EgressViolation(
+            "note carries a number while the measured value is withheld; "
+            "the margin would reconstruct it"
+        )
 
     haystack = json.dumps(claim).lower()
     for secret in forbidden or []:

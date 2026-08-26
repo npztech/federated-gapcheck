@@ -37,4 +37,13 @@ Electrical Equipment Safety Regulations 2016) and US (47 CFR Part 15 Subparts B
 and C, FCC RF exposure, NRTL listing) for a mains-powered radio-enabled
 consumer device.
 
-Pairs with `@alpozaydin/manufacturer-agent`.
+## The set
+
+| app | role |
+|---|---|
+| [`@npztech/gapcheck`](https://flower.ai/apps/npztech/gapcheck) | UK MDR document gap check, three device agent profiles, file stays on the node |
+| [`@alpozaydin/manufacturer-agent`](https://flower.ai/apps/alpozaydin/manufacturer-agent) | answers clause queries, disclosure ledger |
+| [`@alpozaydin/jurisdiction-agent`](https://flower.ai/apps/alpozaydin/jurisdiction-agent) | decomposes a rulebook, adjudicates claims |
+| [`@alpozaydin/local-node`](https://flower.ai/apps/alpozaydin/local-node) | ledger enforced on the manufacturer's own machine |
+
+Built at the Collaborative Agent Hackathon, Cambridge, 26 August 2026.

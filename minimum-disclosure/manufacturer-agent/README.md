@@ -87,4 +87,13 @@ deployment, and it is not built here.
 There is no cryptographic guarantee. This is enforced accounting over an
 audited channel.
 
-Pairs with `@alpozaydin/jurisdiction-agent`.
+## The set
+
+| app | role |
+|---|---|
+| [`@npztech/gapcheck`](https://flower.ai/apps/npztech/gapcheck) | UK MDR document gap check, three device agent profiles, file stays on the node |
+| [`@alpozaydin/manufacturer-agent`](https://flower.ai/apps/alpozaydin/manufacturer-agent) | answers clause queries, disclosure ledger |
+| [`@alpozaydin/jurisdiction-agent`](https://flower.ai/apps/alpozaydin/jurisdiction-agent) | decomposes a rulebook, adjudicates claims |
+| [`@alpozaydin/local-node`](https://flower.ai/apps/alpozaydin/local-node) | ledger enforced on the manufacturer's own machine |
+
+Built at the Collaborative Agent Hackathon, Cambridge, 26 August 2026.

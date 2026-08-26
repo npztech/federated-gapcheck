@@ -1,0 +1,6 @@
+.venv/
+*.fab
+__pycache__/
+uv.lock
+assessment.json
+matrix_*.csv

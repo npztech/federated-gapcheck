@@ -1,6 +1,8 @@
 # Python
 __pycache__/
 *.pyc
+.venv/
+uv.lock
 
 # Flower build artefacts
 *.fab
@@ -8,6 +10,9 @@ __pycache__/
 # Local runtime logs (SuperLink / SuperNode)
 .runtime/
 
+# Generated output — minimum-disclosure/
+assessment.json
+matrix_*.csv
 
 # Editor / scratch
 *.bak

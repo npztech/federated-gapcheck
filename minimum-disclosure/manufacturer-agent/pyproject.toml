@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "manufacturer-agent"
+version = "0.1.0"
+description = "Answers regulator clause queries from a private technical file"
+license = "Apache-2.0"
+requires-python = ">=3.11"
+dependencies = ["flwr>=1.35.0,<2.0", "openai>=2.16.0,<3.0.0"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["mfr_agent"]
+
+[tool.flwr.app]
+publisher = "alpozaydin"
+display-name = "Manufacturer Agent"
+flwr-version-target = "1.35.0"
+fab-include = ["mfr_agent/**/*.py", "mfr_agent/fixtures/*.json"]
+
+[tool.flwr.app.config.agent]
+technical-file = "mfr_northwind"
+technical-file-b64 = ""
+query = ""
+queries-b64 = ""
+jurisdiction = ""
+ledger-b64 = ""
+request-exact = false
+input = ""
+
+[tool.flwr.app.components]
+agentapp = "mfr_agent.agent_app:app"
